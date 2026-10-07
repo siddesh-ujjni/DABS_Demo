@@ -1,0 +1,37 @@
+# Declarative Automation Bundle (DAB) Configuration
+# This bundle deploys a sample job across dev and prod environments.
+
+bundle:
+  name: dabs_cicd_demo
+
+include:
+  - resources/*.yml
+
+variables:
+  catalog:
+    description: Target Unity Catalog catalog
+    default: dev_catalog
+  schema:
+    description: Target Unity Catalog schema
+    default: dev_schema
+
+targets:
+  dev:
+    default: true
+    mode: development
+    workspace:
+      host: https://adb-984752964297111.11.azuredatabricks.net
+    variables:
+      catalog: dev_catalog
+      schema: dev_schema
+
+  prod:
+    mode: production
+    workspace:
+      host: https://adb-984752964297111.11.azuredatabricks.net
+    variables:
+      catalog: prod_catalog
+      schema: prod_schema
+    run_as:
+      # Replace with your production service principal
+      service_principal_name: your-prod-service-principal

@@ -1,0 +1,23 @@
+# Job resource definition for the DABs CI/CD demo.
+# This job runs a sample notebook on serverless compute.
+
+resources:
+  jobs:
+    dabs_cicd_demo_job:
+      name: dabs_cicd_demo_job
+      description: "Sample job deployed via DABs and GitHub Actions"
+      tags:
+        deployed_by: dabs
+        project: cicd_demo
+      tasks:
+        - task_key: run_sample_notebook
+          notebook_task:
+            notebook_path: ../src/notebooks/sample_job.ipynb
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+          # Uses serverless compute by default (no cluster config needed)
+      email_notifications:
+        on_failure:
+          # Replace with your team's email
+          - your-team@company.com
