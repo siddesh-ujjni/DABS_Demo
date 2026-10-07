@@ -1,4 +1,5 @@
 # DABs CI/CD Demo
+<!-- Deployed from Databricks workspace -->
 
 A minimal example of **Declarative Automation Bundles (DABs)** with **GitHub Actions** for automated multi-environment deployment on Databricks.
 
