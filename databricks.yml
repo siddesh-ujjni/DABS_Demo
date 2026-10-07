@@ -1,4 +1,4 @@
-# Declarative Automation Bundle (DAB) Configuration _ added text to test the deployment.
+# Declarative Automation Bundle (DAB) Configuration 
 # This bundle deploys a sample job across dev and prod environments.
 
 bundle:
