@@ -36,7 +36,7 @@ jobs:
         run: databricks bundle validate --strict -t dev
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+          DATABRICKS_TOKEN: ${{ secrets.DAATBRICKS_TOKEN }}
 
   # ----------------------------------------------------------------
   # Step 2: Deploy to Dev — auto-triggers on push to main
@@ -58,13 +58,13 @@ jobs:
         run: databricks bundle deploy -t dev
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+          DATABRICKS_TOKEN: ${{ secrets.DAATBRICKS_TOKEN }}
 
       - name: Run job in dev
         run: databricks bundle run dabs_cicd_demo_job -t dev
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+          DATABRICKS_TOKEN: ${{ secrets.DAATBRICKS_TOKEN }}
 
   # ----------------------------------------------------------------
   # Step 3: Deploy to Prod — manual trigger with approval gate
@@ -87,4 +87,4 @@ jobs:
         env:
           # Use separate secrets per environment for isolation
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+          DATABRICKS_TOKEN: ${{ secrets.DAATBRICKS_TOKEN }}
