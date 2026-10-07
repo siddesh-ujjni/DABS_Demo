@@ -24,7 +24,7 @@ jobs:
   # ----------------------------------------------------------------
   validate:
     name: Validate Bundle
-    runs-on: ubuntu-latest
+    runs-on: self-hosted    # Uses runner in your Azure VNet (IP-allowlisted)
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -36,7 +36,7 @@ jobs:
         run: databricks bundle validate --strict -t dev
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DAATBRICKS_TOKEN }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
 
   # ----------------------------------------------------------------
   # Step 2: Deploy to Dev — auto-triggers on push to main
@@ -45,7 +45,7 @@ jobs:
     name: Deploy to Dev
     needs: validate
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted    # Uses runner in your Azure VNet (IP-allowlisted)
     environment: dev
     steps:
       - name: Checkout code
@@ -58,13 +58,13 @@ jobs:
         run: databricks bundle deploy -t dev
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DAATBRICKS_TOKEN }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
 
       - name: Run job in dev
         run: databricks bundle run dabs_cicd_demo_job -t dev
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DAATBRICKS_TOKEN }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
 
   # ----------------------------------------------------------------
   # Step 3: Deploy to Prod — manual trigger with approval gate
@@ -73,7 +73,7 @@ jobs:
     name: Deploy to Production
     needs: validate
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'prod'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted    # Uses runner in your Azure VNet (IP-allowlisted)
     environment: prod   # Configure required reviewers in GitHub repo settings
     steps:
       - name: Checkout code
@@ -87,4 +87,4 @@ jobs:
         env:
           # Use separate secrets per environment for isolation
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DAATBRICKS_TOKEN }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
